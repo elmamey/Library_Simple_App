@@ -1,5 +1,5 @@
 require.config({
-    baseUrl : 'js',
+    baseUrl : '/javascripts',
     paths: {
         jquery: 'jquery',
         underscore: 'underscore',
@@ -16,12 +16,4 @@ require.config({
         },
         "semantic": ['jquery']
     }
-});
-
-require(['jquery','semantic'], function($){
-    $(document).ready(function(){
-        $('#prueba').on('click', function(){
-            $('#load').load('prueba.html');
-        });
-    });
 });

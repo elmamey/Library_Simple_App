@@ -1,16 +1,20 @@
 doctype html
 html
     head
-        title. Library Simple App
+        title Library Simple App
         link(rel='stylesheet', href='/stylesheets/semantic.min.css')
-        script(type='text/javascript', data-main="/javascripts/main", src="/javascripts/require.js")
     body
-        div(class='ui fluid form segment')
-            h3(class='ui header')
-            div(class='field')
-                label Username
-                input(type='text', placeholder='Username')
-            div(class='field')
-                label Password
-                input(type='password', placeholder='Password')
-            div(class='ui blue submit button') Login
+        div(class='ui circular segment')
+            div(class='ui header') Login
+        div(class='ui form attached fluid segment')
+            form(method='POST', action='/login')
+                h3(class='ui header')
+                div(class='field')
+                    label Email
+                    input(type='text', placeholder='Email', name='email')
+                div(class='field')
+                    label Password
+                    input(type='password', placeholder='Password', name='password')
+                button(class='ui right green submit button', type='submit') Login
+        if errorMessage != ''
+            div(class='ui bottom attached red message')= errorMessage

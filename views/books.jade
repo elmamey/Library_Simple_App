@@ -1,0 +1,24 @@
+extends layout
+
+block headbar
+    div(class='ten column') 
+        h3 Library Simple App
+    div(class='six column')
+        img(class='ui avatar image', src='/images/no-avatar.jpg', style="display: inline-block;")
+        = user.profile.firstName + ' ' + user.profile.lastName
+        div(class='ui dropdown selection', id='optionHeaderProfile')
+            div(class='default text') Options
+            i(class='dropdown icon')
+            div(class='menu')
+                div(class='item' data-value='Logout' data-href='/logout') Logout
+                div(class='item' data-value='Profile') Profile
+        script.
+            require(['views/headerProfileOptions']);
+
+block left-side
+    div hola
+    
+block right-side
+    div hola
+    script.
+            require(['apps/book'], function(app){ app.start(); });

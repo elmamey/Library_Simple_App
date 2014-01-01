@@ -12,7 +12,12 @@ define(['underscore', 'backbone'], function ( _, Backbone){
         }),
         
         bookCollection = Backbone.Collection.extend({
-            model : book
+            initialize: function() {
+                this.page = 0;
+                this.limit = 30;
+            },
+            model : book,
+            url : '/books/0/30'
         });
     
     return {

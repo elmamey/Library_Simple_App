@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone'], function ( $, _, Backbone ) {
+define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], function ( $, _, Backbone, template ) {
     'use strict';
         
     var Book = Backbone.View.extend({
@@ -7,7 +7,7 @@ define(['jquery', 'underscore', 'backbone'], function ( $, _, Backbone ) {
             attributes : {
                 'style' : 'position: relative;'
             },
-            template: _.template($('#bookTemplate').html()),
+            template: _.template(template),
             events : {
                 'click i.remove' : 'remove'
             },
@@ -44,26 +44,10 @@ define(['jquery', 'underscore', 'backbone'], function ( $, _, Backbone ) {
                     this.addItem(book);
                 }, this);
             }
-        }),
-        
-        BookForm = Backbone.View.extend({
-            el : "#form_book",
-            events : {
-                'click button[type = "submit"]' : 'add'
-            },
-            add : function(e){
-                e.preventDefault();
-                
-                this.collection.add({
-                    title: this.$('input[type=text]').val(),
-                    path: 'www.google.com'
-                });
-            }
         });
     
     return {
         book : Book,
-        bookList : BookList,
-        bookForm : BookForm
+        bookList : BookList
     };
 });

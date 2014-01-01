@@ -13,6 +13,7 @@
         "socket.io": "*",
         "mongoose": "*",
         "passport" : "*",
-        "passport-local" : "*"
+        "passport-local": "*",
+        "connect-flash": "*"
     }
 }
