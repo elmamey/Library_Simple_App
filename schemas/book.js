@@ -3,10 +3,10 @@
  */
 var mongoose = require('mongoose'),
     bookSchema = mongoose.Schema({
-        _id : mongoose.Schema.Types.ObjectId,
         title : String,
         author : String,
         availables : Number,
+        path : String,
         isbn : String
 }, { collection: 'books' });
 

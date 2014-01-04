@@ -14,6 +14,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var UserSchema = require('./schemas/user');
 var dbconf = require('./dbconf');
+var io = require('socket.io');
+var utils = require('utils');
 
 mongoose.connect('mongodb://' + dbconf.host + ':' + dbconf.port + '/' + dbconf.db);
 var userModel = new UserSchema();
@@ -51,6 +53,7 @@ passport.use(new LocalStrategy({
 ));
 
 var app = express();
+var socket = io.listen(app);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -61,7 +64,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.cookieParser('library'));
-app.use(express.session());
+app.use(express.session({secret: 'library', key: 'express.sid'}));
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(passport.initialize());
@@ -79,4 +82,15 @@ router.route(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+// Socket io
+socket.set('authorization', function (data, accept) {
+    if (data.headers.cookie) {
+        data.cookie = utils.parseCookie(data.headers.cookie);
+        data.sessionID = data.cookie['express.sid'];
+    } else {
+       return accept('No cookie transmitted.', false);
+    }
+    accept(null, true);
 });

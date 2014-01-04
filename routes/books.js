@@ -10,8 +10,8 @@ exports.index = function(req, res){
 };
 
 exports.get = function(req, res){
-    var offset = req.params.offset || 0
-    , limit = req.params.limit || 30
+    var offset = req.body.page || 0
+    , limit = req.body.limit || 30
     , response = {'data' : [], 'count' : 0};
 
     BookSchema.find({},function(err,data){

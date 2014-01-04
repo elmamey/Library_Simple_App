@@ -18,8 +18,23 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
                 this.$el.html( this.template(this.model.toJSON()));
             },
             remove: function(){
-                this.model.destroy();
-                this.$el.remove();
+                var el = this.$el,
+                    loader = $('<div class="ui active dimmer">'+
+                             '<div class="ui text loader">Loading</div>'+
+                             '</div>');
+                el.find('.segment').append(loader);
+                this.model.destroy({
+                    success: function(){
+                        el.remove();
+                    },
+                    error: function(){ 
+                        loader.find('.text').removeClass('loader').text('Error Deleting this element');
+                        setTimeout(function(){
+                            loader.remove();
+                        },3500);
+                    }
+                });
+
             }
         }),
         
@@ -28,6 +43,7 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
             className : 'three column doubling ui grid',
             initialize : function(){
                 this.collection.on('add', this.addItem, this);
+                this.collection.bind('reset', this.render);
                 //this.collection.on('remove', this.removeItem, this);
             },
             removeItem : function(){
@@ -39,7 +55,7 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
                 this.$el.append(bookView.el);
             },
             render: function(){
-                this.$el.empty();
+                $(this.el).empty();
                 this.collection.each(function(book){
                     this.addItem(book);
                 }, this);

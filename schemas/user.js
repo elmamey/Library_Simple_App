@@ -3,7 +3,6 @@
  */
 var mongoose = require('mongoose'),
     usersSchema = mongoose.Schema({
-        _id : mongoose.Schema.Types.ObjectId,
         password : String,
         email : String,
         created : { type: Date, "default" : Date.now },

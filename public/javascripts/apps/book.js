@@ -8,13 +8,9 @@ define(['models/bookModel', 'views/bookView'], function ( model, view ) {
         
         bookList.render();
         
-        //$('#book_container').html(bookList.el);
+        $('#book_container').html(bookList.el);
         
-        bookCollection.fetch({
-            success: function(data) {
-                console.log(data);
-            }
-        });
+        bookCollection.fetch({data : {page : bookList.collection.page, limit : bookList.collection.limit}});
     }
     
     return { start : start }

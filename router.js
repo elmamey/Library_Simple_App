@@ -1,5 +1,6 @@
 var login = require('./routes/index')
   , books = require('./routes/books')
+  , users = require('./routes/user')
   , passport = require('passport');
 
 exports.route = function(app){
@@ -8,7 +9,7 @@ exports.route = function(app){
     */
     app.get('/', function(req, res, next){
         if (req.isAuthenticated()) { 
-            res.redirect('/books');
+            res.redirect('/bookp');
         }else{
             return next();
         }
@@ -20,7 +21,7 @@ exports.route = function(app){
     */
     app.post('/login',passport.authenticate('local', { failureRedirect: '/', failureFlash : true}
     ),function(req, res) {
-        res.redirect('/books');
+        res.redirect('/bookp');
     });
     
     /**
@@ -34,7 +35,7 @@ exports.route = function(app){
     /**
     * Books Page 
     */
-    app.get('/books', function(req, res, next){
+    app.get('/bookp', function(req, res, next){
         if (!req.isAuthenticated()) { 
             res.redirect('/');
         }else{
@@ -43,14 +44,24 @@ exports.route = function(app){
     }, books.index);
     
     /** 
-    Books gets
+    * Books gets
     */
-    app.get('/books/:offset/:limit', function(req, res, next){
+    app.get('/books', function(req, res, next){
         if (!req.isAuthenticated()) { 
             res.send(403);
         }else{
             return next();
         }
-    }, books.get)
+    }, books.get);
     
+    /**
+    * User add
+    */
+    app.post('/users', function(req, res, next){
+        if (!req.isAuthenticated()) { 
+            res.send(403);
+        }else{
+            return next();
+        }
+    },users.add);
 };

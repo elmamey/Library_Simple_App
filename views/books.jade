@@ -10,15 +10,15 @@ block headbar
             div(class='default text') Options
             i(class='dropdown icon')
             div(class='menu')
-                div(class='item' data-value='Logout' data-href='/logout') Logout
-                div(class='item' data-value='Profile') Profile
-        script.
-            require(['views/headerProfileOptions']);
-
-block left-side
-    div hola
-    
-block right-side
-    div hola
+                div(class='item' data-href='/logout' id='logout_user') Logout
+                div(class='item') Profile
+                if user.rol == 'admin'
+                    div(class='item' id='add-user-modal') Add user
+    div(class='ui modal', id='addUserModal')
+    script.
+        require(['views/headerProfileOptions']);
+block inside
+    div
+        div#book_container
     script.
             require(['apps/book'], function(app){ app.start(); });
