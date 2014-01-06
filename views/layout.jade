@@ -1,18 +1,19 @@
 doctype html
 html
   head
-    title Library Simple App
-    link(rel='stylesheet', href='/stylesheets/semantic.min.css')
+    title Simple Library App
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
     script(type='text/javascript', data-main="/javascripts/main", src="/javascripts/require.js")
   body
-    div
-        block content
-            div(class='ui two column grid')
-                block headbar
-            div
+    block content
+        div(class='wrap')
+            div(class='navbar navbar-default navbar-fixed-top')
+                div(class='container')
+                    block headbar
+            div(class='container', style='padding-top: 80px')
                 block inside
-            div(class='ui two column grid')
-                div(class='four wide column')
-                    block left-side
-                div(class='twelve wide column')
-                    block right-side
+        div(class='footer')
+            include footer

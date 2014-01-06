@@ -1,3 +1,42 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Add User</h4>
+</div>
+<div class="modal-body">
+    <form id='form_user_add'>
+        <div class='container'>
+            <div class='row'>
+                <label>First Name</label>
+                <input placeholder="First Name" name="firstName" type="text">
+            </div>
+            <div class='row'>
+                <label>Last Name</label>
+                <input placeholder="Last Name" name="lastName" type="text">
+            </div>
+            <div class='row'>
+                <label>Email</label>
+                <input placeholder="Email" type="text" name="email">
+            </div>
+            <div class='row'>
+                <label>Password</label>
+                <input type="password" placeholder="Password" name="password">
+            </div>
+            <div class='row'>
+                <label>Rol</label>
+                <select name='rol' style='height: 30px;'>
+                    <option value=''>Choose</option>
+                    <option value='admin'>Admin</option>
+                    <option value='user'>User</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" data-attr='submit'>Submit</button>
+</div>
+
 <i class="close icon"></i>
 <div class="header">
     Add User

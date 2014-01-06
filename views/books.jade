@@ -1,22 +1,24 @@
 extends layout
 
 block headbar
-    div(class='ten column') 
-        h3 Library Simple App
-    div(class='six column')
-        img(class='ui avatar image', src='/images/no-avatar.jpg', style="display: inline-block;")
-        = user.profile.firstName + ' ' + user.profile.lastName
-        div(class='ui dropdown selection', id='optionHeaderProfile')
-            div(class='default text') Options
-            i(class='dropdown icon')
-            div(class='menu')
-                div(class='item' data-href='/logout' id='logout_user') Logout
-                div(class='item') Profile
-                if user.rol == 'admin'
-                    div(class='item' id='add-user-modal') Add user
-    div(class='ui modal', id='addUserModal')
-    script.
-        require(['views/headerProfileOptions']);
+    include headbar
+    //
+        div(class='ten column') 
+            h3 Simple App
+        div(class='six column')
+            img(class='ui avatar image', src='/images/no-avatar.jpg', style="display: inline-block;")
+            = user.profile.firstName + ' ' + user.profile.lastName
+            div(class='ui dropdown selection', id='optionHeaderProfile')
+                div(class='default text') Options
+                i(class='dropdown icon')
+                div(class='menu')
+                    div(class='item' data-href='/logout' id='logout_user') Logout
+                    div(class='item') Profile
+                    if user.rol == 'admin'
+                        div(class='item' id='add-user-modal') Add user
+        div(class='ui modal', id='addUserModal')
+        script.
+            require(['views/headerProfileOptions']);
 block inside
     div
         div#book_container

@@ -1,0 +1,32 @@
+html, body{
+    height: 100%;
+}
+
+.divider-one{
+    background-color: #3498DB;
+    min-height:50%;   
+    position:relative;
+}
+
+.login-box{
+    position:absolute;
+    bottom:-128px;
+    left:50%;
+    width:300px;
+    margin-left:-150px;
+    height:220px;
+    z-index:2
+}
+
+.footer{
+    position: absolute; 
+    bottom: 0px;
+    left:0px;
+    width: 100%;
+    text-align:center;
+}
+
+.footer a{
+    margin-left: 4px;
+    margin-right:4px;
+}

@@ -4,7 +4,7 @@ require.config({
         jquery: 'jquery',
         underscore: 'underscore',
         backbone: 'backbone',
-        semantic : 'semantic'
+        bootstrap : 'bootstrap.min'
     },
     shim: {
         underscore: {
@@ -14,6 +14,6 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-        "semantic": ['jquery']
+        "bootstrap": ['jquery']
     }
 });

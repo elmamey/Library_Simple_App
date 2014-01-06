@@ -1,10 +1,9 @@
-require(['require','jquery','underscore', 'backbone','semantic'], function ( require, $, _, Backbone ) {
+require(['require','jquery','underscore', 'backbone','bootstrap'], function ( require, $, _, Backbone ) {
     'use strict';
                 
     var View = Backbone.View.extend({
-            el : "#optionHeaderProfile",
+            el : '#header_app',
             events : {
-                'click .menu .item:first-child' : 'goTo',
                 'click #add-user-modal' : 'addUser'
             },
             modalUserAdd : null,
@@ -13,12 +12,11 @@ require(['require','jquery','underscore', 'backbone','semantic'], function ( req
                     $el = $this.$el;
 
                 $(document).ready(function(){
-                    $el.dropdown();
                     
                     require(['views/addUserView'], function(view){
                         var view = new view.userView({el : '#addUserModal'});
                         $this.modalUserAdd = $('#addUserModal');
-                        
+
                         view.on('user:save', function(model){
                             $this.modalUserAdd.modal('hide');
                             alert('User registered');
@@ -26,11 +24,9 @@ require(['require','jquery','underscore', 'backbone','semantic'], function ( req
                     });
                 });
             },
-            goTo : function(e){
-                var target = $(e.currentTarget);
-                window.location.href = target.data('href');
-            },
-            addUser : function(){
+            addUser : function(e){
+                e.preventDefault();
+                console.log('asdsad');
                 this.modalUserAdd.modal('show');
             }
         });

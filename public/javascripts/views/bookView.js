@@ -3,7 +3,7 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
         
     var Book = Backbone.View.extend({
             tagName : 'div',
-            className : 'column',
+            className : 'col-xs-4',
             attributes : {
                 'style' : 'position: relative;'
             },
@@ -40,7 +40,7 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
         
         BookList = Backbone.View.extend({
             tagName : 'div',
-            className : 'three column doubling ui grid',
+            className : 'row',
             initialize : function(){
                 this.collection.on('add', this.addItem, this);
                 this.collection.bind('reset', this.render);

@@ -1,20 +1,38 @@
 doctype html
 html
     head
-        title Library Simple App
-        link(rel='stylesheet', href='/stylesheets/semantic.min.css')
+        title Simple Library App
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', href='/stylesheets/login.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
     body
-        div(class='ui circular segment')
-            div(class='ui header') Login
-        div(class='ui form attached fluid segment')
-            form(method='POST', action='/login')
-                h3(class='ui header')
-                div(class='field')
-                    label Email
-                    input(type='text', placeholder='Email', name='email')
-                div(class='field')
-                    label Password
-                    input(type='password', placeholder='Password', name='password')
-                button(class='ui right green submit button', type='submit') Login
-        if errorMessage != ''
-            div(class='ui bottom attached red message')= errorMessage
+        div(class='divider-one')
+            div(class='container')
+                div(class='row')
+                    div(class='col-xs-12')
+                        h1(style='color: #FFFFFF;text-align: center') Simple Library App
+                        h3(style='color: #FFFFFF;text-align: center') Login
+                    div(class='login-box well')
+                        form(method='POST', action='/login', role='form')
+                            div(class='form-group')
+                                label Email
+                                input(type='text', placeholder='Email', name='email', class='form-control', autocomplete='off')
+                            div(class='form-group')
+                                label Password
+                                input(type='password', placeholder='Password', name='password', class='form-control', autocomplete='off')
+                            div(class='form-group')
+                                button(class='btn btn-primary', type='submit') Login
+        div(class='container')
+            div(class='row')
+                div(class='col-xs-12', style='padding-top: 120px')
+                    if errorMessage != ''
+                        p(class='text-danger', style='text-align: center')= errorMessage
+        div(class='footer')
+            a(href='https://github.com/gesanchez/Simple_Library_App', target='_blank')
+                i(class='fa fa-github-square fa-3x')
+            a(href='http://ve.linkedin.com/pub/german-sanchez/51/a75/379', target='_blank')
+                i(class='fa fa-linkedin-square fa-3x')
+            a(href='https://plus.google.com/u/0/+GermanEnriqueSanchezQuintero', target='_blank')
+                i(class='fa fa-google-plus-square fa-3x')

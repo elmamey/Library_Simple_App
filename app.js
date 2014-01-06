@@ -15,7 +15,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var UserSchema = require('./schemas/user');
 var dbconf = require('./dbconf');
 var io = require('socket.io');
-var utils = require('utils');
+var utils = require('util');
 
 mongoose.connect('mongodb://' + dbconf.host + ':' + dbconf.port + '/' + dbconf.db);
 var userModel = new UserSchema();
@@ -53,7 +53,9 @@ passport.use(new LocalStrategy({
 ));
 
 var app = express();
-var socket = io.listen(app);
+var server = http.createServer(app)
+
+var socket = io.listen(server);
 
 // all environments
 app.set('port', process.env.PORT || 3000);

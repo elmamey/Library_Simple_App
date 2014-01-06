@@ -6,12 +6,9 @@ define(['jquery', 'underscore', 'backbone','models/userModel','text!/templates/a
         initialize: function(){
             var el = this.$el;
             this.render();
-            $(document).ready(function(){
-                el.find('.ui.dropdown').dropdown();
-            });
         },
         events : {
-            'click .submit' : 'save'
+            'click button[data-attr= "submit"]' : 'save'
         },
         render: function(){
             var el = this.$el;
