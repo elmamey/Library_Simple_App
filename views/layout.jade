@@ -10,10 +10,13 @@ html
   body
     block content
         div(class='wrap')
-            div(class='navbar navbar-default navbar-fixed-top')
+            div(class='navbar navbar-default navbar-fixed-top', id='header_app')
                 div(class='container')
                     block headbar
             div(class='container', style='padding-top: 80px')
+                div(class='modal fade' id='addUserModal')
+                    div(class='modal-dialog')
+                        div(class='modal-content')
                 block inside
         div(class='footer')
             include footer

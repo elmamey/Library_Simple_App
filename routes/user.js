@@ -13,28 +13,37 @@ exports.add = function(req, res){
         User.password = field.password;
         User.rol = field.rol;
         User.profile = {firstName : field.firstName,lastName : field.lastName,cb : new Date().getTime().toString(36)};
-        
-    User.save(function(err, data){
-        console.log(err);
-        if (!err){
-            console.log(data);
-            res.json({
-                code : 200,
-                data : {
-                    success : 1,
-                    _id : data._id
+    
+    
+    UserSchema.findOne({email: field.email}, function(err, data){
+        if (data === null){
+            User.save(function(err, data){
+                if (!err){
+                    res.json({
+                        code : 200,
+                        data : {
+                            success : 1,
+                            _id : data._id
+                        }
+                    });
+                }else{
+                    res.json({
+                        code : 500,
+                        data : {
+                            success : 0,
+                            message : err
+                        }
+                    });
                 }
             });
         }else{
-            res.json({
-                code : 500,
+           res.json({
+                code : 200,
                 data : {
                     success : 0,
-                    message : err
+                    message : 'Email already exist.'
                 }
-            });
+            }); 
         }
-    
-    });
-    
+    });    
 };

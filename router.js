@@ -54,6 +54,17 @@ exports.route = function(app){
         }
     }, books.get);
     
+    /** 
+    * Books delete
+    */
+    app.delete('/books/:id', function(req, res, next){
+        if (!req.isAuthenticated()) { 
+            res.send(403);
+        }else{
+            return next();
+        }
+    }, books.delete);
+    
     /**
     * User add
     */

@@ -5,7 +5,6 @@ define(['models/bookModel', 'views/bookView'], function ( model, view ) {
             bookCollection = new model.bookCollection(),
             bookList = new view.bookList({collection : bookCollection});
 
-        
         bookList.render();
         
         $('#book_container').html(bookList.el);

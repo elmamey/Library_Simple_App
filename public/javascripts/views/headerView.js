@@ -10,25 +10,23 @@ require(['require','jquery','underscore', 'backbone','bootstrap'], function ( re
             initialize : function(){
                 var $this = this,
                     $el = $this.$el;
-
-                $(document).ready(function(){
                     
-                    require(['views/addUserView'], function(view){
-                        var view = new view.userView({el : '#addUserModal'});
-                        $this.modalUserAdd = $('#addUserModal');
+                require(['views/addUserView'], function(view){
+                    var view = new view.userView({el : '#addUserModal'});
+                    $this.modalUserAdd = $('#addUserModal');
 
-                        view.on('user:save', function(model){
-                            $this.modalUserAdd.modal('hide');
-                            alert('User registered');
-                        });
+                    view.on('user:save', function(model){
+                        $this.modalUserAdd.modal('hide');
+                        alert('User registered');
                     });
                 });
             },
             addUser : function(e){
                 e.preventDefault();
-                console.log('asdsad');
                 this.modalUserAdd.modal('show');
             }
         });
-    new View();
+    $(document).ready(function(){
+        new View();
+    });
 });

@@ -8,9 +8,12 @@ define(['underscore', 'backbone'], function ( _, Backbone){
                 path : '',
                 author : '',
                 isbn : '',
-                availables : 0
+                availables : 0,
+                isReservable : true,
+                isDeleteable : true,
+                isUpdateable : true
             },
-            url : '/books',
+            urlRoot: '/books',
             idAttribute: '_id'
         }),
         

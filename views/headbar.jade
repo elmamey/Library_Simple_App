@@ -1,4 +1,4 @@
-div(class='navbar-header' id='header_app')
+div(class='navbar-header')
     a(class='navbar-brand', href='/bookp')
         b Simple Library App
 nav(class='navbar-collapse collapse')
@@ -12,9 +12,5 @@ nav(class='navbar-collapse collapse')
                         a(id='add-user-modal', href='#') Add user
                 li
                     a(href='/logout') Logout
-    div(class='modal fade')
-        div(class='modal-dialog')
-            div(class='modal-content' id='addUserModal')
-                
 script.
     require(['views/headerView']);

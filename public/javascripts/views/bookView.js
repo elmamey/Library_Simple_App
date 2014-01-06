@@ -9,7 +9,7 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
             },
             template: _.template(template),
             events : {
-                'click i.remove' : 'remove'
+                'click button:has(i.fa-times)' : 'remove'
             },
             initialize: function(){
                 this.render();
@@ -19,16 +19,17 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html'], functio
             },
             remove: function(){
                 var el = this.$el,
-                    loader = $('<div class="ui active dimmer">'+
-                             '<div class="ui text loader">Loading</div>'+
+                    loader = $('<div class="shape-panel">'+
+                             '<div><i class="fa fa-spinner fa-spin fa-2x"></i></div>'+
                              '</div>');
-                el.find('.segment').append(loader);
+                el.find('.panels-book').append(loader);
+
                 this.model.destroy({
                     success: function(){
                         el.remove();
                     },
                     error: function(){ 
-                        loader.find('.text').removeClass('loader').text('Error Deleting this element');
+                        loader.find('div').first().text('Error Deleting this element');
                         setTimeout(function(){
                             loader.remove();
                         },3500);
