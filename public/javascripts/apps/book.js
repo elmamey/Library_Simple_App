@@ -1,15 +1,16 @@
-define(['models/bookModel', 'views/bookView'], function ( model, view ) {
+define(['models/bookModel', 'views/bookView','app'], function ( model, view, App ) {
     'use strict';
+        
     var start = function(){
-        var bookModel = new model.book(),
-            bookCollection = new model.bookCollection(),
-            bookList = new view.bookList({collection : bookCollection});
+        var bookModel = new model.book();
+        App.collections.bookCollection = new model.bookCollection();
+        App.views.bookList = new view.bookList({collection : App.collections.bookCollection, showMore : $('#showMoreBooks')});
 
-        bookList.render();
+        App.views.bookList.render();
         
-        $('#book_container').html(bookList.el);
+        $('#book_container').html(App.views.bookList.el);
         
-        bookCollection.fetch({data : {page : bookList.collection.page, limit : bookList.collection.limit}});
+        App.collections.bookCollection.fetch({data : {page : App.views.bookList.collection.page, limit : App.views.bookList.collection.limit}, success: function(){ App.collections.bookCollection.page = App.collections.bookCollection.page + 1; }});
     }
     
     return { start : start }

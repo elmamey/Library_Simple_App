@@ -54,6 +54,17 @@ exports.route = function(app){
         }
     }, books.get);
     
+    /**
+    * Books save
+    */
+    app.post('/books', function(req,res, next){
+        if (!req.isAuthenticated()) { 
+            res.send(403);
+        }else{
+            return next();
+        }
+    }, books.save);
+    
     /** 
     * Books delete
     */

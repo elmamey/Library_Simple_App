@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Add Book</h4>
+</div>
+<div class="modal-body">
+    <form id='form_book_add' role="form">
+            <div class='row'>
+                <div class='col-xs-6'>
+                    <label>Title</label>
+                    <input placeholder="title" class='form-control' name="title" type="text">
+                </div>
+                <div class='col-xs-6'>
+                    <label>Author</label>
+                    <input placeholder="Author" class='form-control' name="author" type="text">
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-6'>
+                    <label>Availables</label>
+                    <input placeholder="Availables" class='form-control' type="text" name="availables">
+                </div>
+                <div class='col-xs-6'>
+                    <label>ISBN</label>
+                    <input type="text" class='form-control' placeholder="ISBN" name="isbn">
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-6'>
+                    <label>Image Url</label>
+                    <input type="text" class='form-control' placeholder="Image Url" name="path">
+                </div>
+                <div class='col-xs-6' style='padding-top: 5px;text-align: center'>
+                    <img style='width: 64px;height: 64px' src="/images/book-default.png" alt='Image'>
+                </div>
+            </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" data-attr='submit'>Submit</button>
+</div>

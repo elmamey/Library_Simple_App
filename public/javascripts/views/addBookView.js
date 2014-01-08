@@ -1,21 +1,22 @@
-define(['jquery', 'underscore', 'backbone','models/userModel','text!/templates/addUser.html'], function ( $, _, Backbone, Model, template ) {
+define(['jquery', 'underscore', 'backbone','models/bookModel','text!/templates/addBook.html', 'app'], function ( $, _, Backbone, Model, template, App ) {
     'use strict';
-        
-    var user = Backbone.View.extend({
+    
+    var book = Backbone.View.extend({
         template: _.template(template),
         initialize: function(){
             var el = this.$el;
             this.render();
         },
         events : {
-            'click button[data-attr= "submit"]' : 'save'
+            'click button[data-attr= "submit"]' : 'save',
+            'keyup input:text[name = "path"]' : 'updateImg'
         },
         render: function(){
             var el = this.$el;
             el.find('.modal-content').html(this.template({}));
         },
         save : function(){
-            var form = $('#form_user_add'),
+            var form = $('#form_book_add'),
                 fields = {},
                 view = this;
             
@@ -26,12 +27,12 @@ define(['jquery', 'underscore', 'backbone','models/userModel','text!/templates/a
                 fields[$this.attr('name')] = $this.val();
             });
             
-            var userModel = new Model.userModel(fields);
-            userModel.parse = function(response){
+            var bookModel = new Model.book(fields);
+            bookModel.parse = function(response){
                 var object = {};
                 if (response.data.success === 1){
                     _.each(response.data, function(a,b){
-                        if (userModel.get(b) !== undefined){
+                        if (bookModel.get(b) !== undefined){
                             object[b] = a;
                         }
                     });
@@ -48,19 +49,23 @@ define(['jquery', 'underscore', 'backbone','models/userModel','text!/templates/a
                 }
             };
             
-            userModel.on('request', function(){
-                form.addClass('loading');
+            bookModel.on('request', function(){
+                //form.addClass('loading');
             });
             
-            if (!userModel.isValid()) {
+            if (!bookModel.isValid()) {
                 var message = $('<p class="text-danger">' + userModel.validationError + '</p>');
                 form.prepend(message.show());
             }else{
-                userModel.save(null,{
+                bookModel.save(null,{
                     success : function(model,xhr){ 
                         if (xhr.data.success === 1){
-                            form.find('input:text, input:hidden, input:password, select').val('');
-                            view.trigger("user:save", userModel); 
+                            form.find('input:text').val('');
+                            view.trigger("book:save", bookModel);
+                            
+                            if (App.collections.hasOwnProperty('bookCollection')){
+                                App.collections.bookCollection.add(model,{at: 0});
+                            }
                         }
                     },
                     error : function(){
@@ -72,13 +77,17 @@ define(['jquery', 'underscore', 'backbone','models/userModel','text!/templates/a
                     }
                 });
             }
+        },
+        updateImg : function(e){
+            
+            $('#form_book_add').find('img').attr('src',$(e.currentTarget).val());
         }
     });
     
-    _.extend(user, Backbone.Events);
+    _.extend(book, Backbone.Events);
 
         
     return {
-        userView : user
+        bookView : book
     };
 });

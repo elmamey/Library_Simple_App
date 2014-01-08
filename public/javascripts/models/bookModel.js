@@ -14,7 +14,28 @@ define(['underscore', 'backbone'], function ( _, Backbone){
                 isUpdateable : true
             },
             urlRoot: '/books',
-            idAttribute: '_id'
+            idAttribute: '_id',
+            validate: function(attrs, options){
+                if (attrs.title === ''){
+                    return 'Title is required.';
+                }
+                
+                if (attrs.author === ''){
+                    return 'Author is required.';
+                }
+                
+                if (attrs.isbn === ''){
+                    return 'ISBN is required.';
+                }
+                
+                if (attrs.availables === ''){
+                    return 'Availables is required.';
+                }
+                
+                if (attrs.availables !== '' && isNaN(attrs.availables) === true){
+                    return 'Availables only accept numbers.';
+                }
+            }
         }),
         
         bookCollection = Backbone.Collection.extend({

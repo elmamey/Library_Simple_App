@@ -17,3 +17,6 @@ require.config({
         "bootstrap": ['jquery']
     }
 });
+
+require(["app", "router"], function(App, router){
+});
