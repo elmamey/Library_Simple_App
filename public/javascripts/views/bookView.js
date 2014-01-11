@@ -13,10 +13,15 @@ define(['jquery', 'underscore', 'backbone','text!/templates/book.html', 'app'], 
                 'click button:has(i.fa-edit)' : 'edit'
             },
             initialize: function(){
+                this.model.on('change', this.render, this);
+                this.model.on('remove', this.removeElement, this);
                 this.render();
             },
             render: function(){
                 this.$el.html( this.template(this.model.toJSON()));
+            },
+            removeElement : function(){
+                this.$el.remove();
             },
             remove: function(){
                 var el = this.$el,

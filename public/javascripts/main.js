@@ -4,7 +4,8 @@ require.config({
         jquery: 'jquery',
         underscore: 'underscore',
         backbone: 'backbone',
-        bootstrap : 'bootstrap.min'
+        bootstrap : 'bootstrap.min',
+        socketio : '/socket.io/socket.io'
     },
     shim: {
         underscore: {
@@ -14,9 +15,13 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-        "bootstrap": ['jquery']
+        "bootstrap": ['jquery'],
+        'socketio': {
+            exports: 'io'
+        }
     }
 });
 
-require(["app", "router"], function(App, router){
+require(["app", "router"], function(App, Router){
+    Router.initialize(App);
 });

@@ -52,11 +52,9 @@ passport.use(new LocalStrategy({
     }
 ));
 
-var app = express();
-var server = http.createServer(app)
-
-var socket = io.listen(server);
-
+var app = express(),
+    cookieParse = express.cookieParser('library'),
+    sessionStore = new express.session.MemoryStore();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -65,8 +63,8 @@ app.use(flash());
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
-app.use(express.cookieParser('library'));
-app.use(express.session({secret: 'library', key: 'express.sid'}));
+app.use(cookieParse);
+app.use(express.session({secret: 'library', key: 'express.sid', store : sessionStore, cookie: {httpOnly: true}}));
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(passport.initialize());
@@ -79,20 +77,49 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Router Module
-router.route(app);
+var server = http.createServer(app),
+    socket = io.listen(server);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
 
 // Socket io
 socket.set('authorization', function (data, accept) {
-    if (data.headers.cookie) {
-        data.cookie = utils.parseCookie(data.headers.cookie);
-        data.sessionID = data.cookie['express.sid'];
-    } else {
-       return accept('No cookie transmitted.', false);
-    }
-    accept(null, true);
+    if (!data.headers.cookie) { return accept('No cookie transmitted.', false); }
+
+    cookieParse(data,{}, function(err){
+
+        var sidCookie = (data.secureCookies && data.secureCookies['express.sid']) ||
+                        (data.signedCookies && data.signedCookies['express.sid']) ||
+                        (data.cookie && data.cookie['express.sid']);
+
+        sessionStore.load(sidCookie, function(err, session) {
+                        
+            if (err || !session) {
+                accept('Error', false);
+            } else {
+                data.session = session;
+                accept(null, true);
+            }
+        });
+    });
+});
+
+socket.sockets.on('connection', function (socket) {
+    var hs = socket.handshake;
+    var intervalID = setInterval(function () {
+        hs.session.reload( function () { 
+            hs.session.touch().save();
+        });
+    }, 60 * 1000);
+    
+    socket.on('disconnect', function () {
+        clearInterval(intervalID);
+    });
+
+});
+
+// Router Module
+router.route(app, socket);
+
+server.listen(app.get('port'), function(){
+    console.log('Server runing');
 });

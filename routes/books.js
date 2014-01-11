@@ -16,7 +16,11 @@ exports.get = function(req, res){
     , response = {'data' : [], 'count' : 0}
     , isReservable = (req.user.rol === 'admin') ? false : true
     , isDeleteable = (req.user.rol === 'admin') ? true : false
-    , isUpdateable = (req.user.rol === 'admin') ? true : false
+    , isUpdateable = (req.user.rol === 'admin') ? true : false;
+    
+    console.log(req.event);
+    
+    //req.res.socket.broadcast.emit('get','asd');
     
     BookSchema.find({}).skip(offset).limit(limit).exec(function(err,data){
         if (!err){
@@ -54,7 +58,7 @@ exports.get = function(req, res){
     });
 };  
 
-exports.save = function(req, res){
+exports.save = function(req, res, socket){
     
     var field = req.body,
         Book = new BookSchema();
@@ -75,6 +79,8 @@ exports.save = function(req, res){
             if (data.availables < 0){
                 isReservable = false;
             } 
+            
+            socket.sockets.emit('book:save', data);
             
             res.json({
                 code : 200,
@@ -98,15 +104,50 @@ exports.save = function(req, res){
     });
 };
 
-exports.delete = function(req, res){
+exports.delete = function(req, res, socket){
     var id = req.params.id;
     
     BookSchema.remove({_id : id}, function(err, data){
     
         if (err){ res.send(404); }
         
-        res.send(204);
+        socket.sockets.emit('book:delete', id);
         
+        res.send(204);
     });
+};
+
+exports.update = function(req, res){
+    var id = req.params.id,
+        field = req.body;
     
+    BookSchema.findByIdAndUpdate({ _id: id }, 
+        { $set: { 
+            title: field.title,
+            author: field.author,
+            availables: field.availables,
+            path: field.path,
+            isbn: field.isbn
+        }}, function(err, data){
+        
+            if (!err){
+                res.json({
+                    code : 200,
+                    data : {
+                        success : 1
+                    }
+                });
+                
+            }else{
+                
+                res.json({
+                    code : 500,
+                    data : {
+                        success : 0,
+                        message : err
+                    }
+                });
+                
+            }
+    });
 };

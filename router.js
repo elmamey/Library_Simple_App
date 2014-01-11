@@ -3,7 +3,7 @@ var login = require('./routes/index')
   , users = require('./routes/user')
   , passport = require('passport');
 
-exports.route = function(app){
+exports.route = function(app, socket){
     /**
     * Login Page
     */
@@ -57,24 +57,35 @@ exports.route = function(app){
     /**
     * Books save
     */
-    app.post('/books', function(req,res, next){
+    app.post('/books', function(req,res){
         if (!req.isAuthenticated()) { 
             res.send(403);
         }else{
-            return next();
+            books.save(req,res, socket);
         }
-    }, books.save);
+    });
     
     /** 
     * Books delete
     */
-    app.delete('/books/:id', function(req, res, next){
+    app.delete('/books/:id', function(req, res){
         if (!req.isAuthenticated()) { 
             res.send(403);
         }else{
-            return next();
+            books.delete(req,res,socket);
         }
-    }, books.delete);
+    });
+    
+    /**
+    * Books update
+    */
+    app.put('/books/:id', function(req, res){
+        if (!req.isAuthenticated()) { 
+            res.send(403);
+        }else{
+            books.update(req,res,socket);
+        }
+    });
     
     /**
     * User add

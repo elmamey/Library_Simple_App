@@ -22,17 +22,16 @@ define(['jquery', 'underscore', 'backbone','models/bookModel','text!/templates/e
             
             form.find('p.text-danger').remove();
             
-            form.find('input:text, input:hidden, input:password, select').each(function(){
+            form.find('input:text').each(function(){
                 var $this = $(this);
                 fields[$this.attr('name')] = $this.val();
             });
             
-            var bookModel = new Model.book(fields);
-            bookModel.parse = function(response){
+            view.model.parse = function(response){
                 var object = {};
                 if (response.data.success === 1){
                     _.each(response.data, function(a,b){
-                        if (bookModel.get(b) !== undefined){
+                        if (view.model.get(b) !== undefined){
                             object[b] = a;
                         }
                     });
@@ -49,19 +48,20 @@ define(['jquery', 'underscore', 'backbone','models/bookModel','text!/templates/e
                 }
             };
             
-            bookModel.on('request', function(){
+            view.model.on('request', function(){
                 //form.addClass('loading');
             });
             
-            if (!bookModel.isValid()) {
-                var message = $('<p class="text-danger">' + userModel.validationError + '</p>');
+            if (!view.model.isValid()) {
+                var message = $('<p class="text-danger">' + view.model.validationError + '</p>');
                 form.prepend(message.show());
             }else{
-                bookModel.save(null,{
+                view.model.save(fields,{
+                    wait: true,
                     success : function(model,xhr){ 
                         if (xhr.data.success === 1){
                             form.find('input:text').val('');
-                            view.trigger("book:save", bookModel);
+                            view.trigger("book:update", view.model);
                             
                             if (App.collections.hasOwnProperty('bookCollection')){
                                 App.collections.bookCollection.add(model,{at: 0});
@@ -80,7 +80,7 @@ define(['jquery', 'underscore', 'backbone','models/bookModel','text!/templates/e
         },
         updateImg : function(e){
             
-            $('#form_book_add').find('img').attr('src',$(e.currentTarget).val());
+            $('#form_book_edit').find('img').attr('src',$(e.currentTarget).val());
         }
     });
     

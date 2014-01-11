@@ -4,12 +4,10 @@ define(function(require, exports, module) {
     var _ = require("underscore");
     var $ = require("jquery");
     var Backbone = require("backbone");
-    var Router = require("router");
+    //var Router = require("router");
 
     var App = {collections : {}, views: {}};
-    
-    Router.initialize(App);
-    
+        
     module.exports = App;
 
 });
